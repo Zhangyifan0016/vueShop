@@ -20,7 +20,10 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
-    return response
+    // 全局响应处理
+    if (response.status === 200) {
+      return response.data
+    }
   },
   (error) => {
     return Promise.reject(error)
