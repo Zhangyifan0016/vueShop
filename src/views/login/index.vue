@@ -23,6 +23,7 @@
             <el-input
               type="password"
               placeholder="请输入密码"
+              show-password
               v-model.trim="loginForm.password"
               :prefix-icon="Lock"
             />
@@ -42,9 +43,13 @@
 </template>
 <script setup>
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { reactive, ref } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
+// 引入通知
+import { ElNotification } from 'element-plus'
 const store = useStore()
+const router = useRouter()
 const loginForm = reactive({
   username: '',
   password: ''
@@ -79,9 +84,21 @@ const handleLoginSubmit = () => {
 }
 const login = async () => {
   try {
-    await store.dispatch('login/login', loginForm)
+    const res = await store.dispatch('login/login', loginForm)
+    if (res.msg === 'ok') {
+      router.push('/')
+      ElNotification({
+        message: '登录成功',
+        type: 'success'
+      })
+    }
   } catch (error) {
     console.log(error)
+    // const { msg } = error.response.data
+    // ElNotification({
+    //   message: msg,
+    //   type: 'error'
+    // })
   } finally {
     loadingStatus.value = false
   }
