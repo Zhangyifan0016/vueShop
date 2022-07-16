@@ -28,7 +28,10 @@
             />
           </el-form-item>
           <el-form-item>
-            <el-button class="loginBtn" @click="handleLoginSubmit"
+            <el-button
+              :loading="loadingStatus"
+              class="loginBtn"
+              @click="handleLoginSubmit"
               >登录</el-button
             >
           </el-form-item>
@@ -38,13 +41,16 @@
   </el-row>
 </template>
 <script setup>
-import loginApi from '../../api/login'
+import { useStore } from 'vuex'
 import { reactive, ref } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
+const store = useStore()
 const loginForm = reactive({
   username: '',
   password: ''
 })
+// loading加载状态
+const loadingStatus = ref(null)
 const loginRef = ref(null)
 // 表单校验
 const loginRules = reactive({
@@ -66,13 +72,19 @@ const loginRules = reactive({
 const handleLoginSubmit = () => {
   loginRef.value.validate((valid) => {
     if (valid) {
+      loadingStatus.value = true
       login()
     }
   })
 }
 const login = async () => {
-  const res = await loginApi.login(loginForm)
-  console.log(res)
+  try {
+    await store.dispatch('login/login', loginForm)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    loadingStatus.value = false
+  }
 }
 </script>
 <style scoped lang="scss">
