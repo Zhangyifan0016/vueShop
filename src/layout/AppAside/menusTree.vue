@@ -2,7 +2,9 @@
   <template v-if="item.child && item.child.length > 0">
     <el-sub-menu :index="item.child[0].frontpath">
       <template #title>
-        <el-icon></el-icon>
+        <el-icon>
+          <svg-icon :icon="item.icon"></svg-icon>
+        </el-icon>
         <span>{{ item.name }}</span>
       </template>
       <menusTree
@@ -14,7 +16,9 @@
   </template>
   <template v-if="item.child && item.child.length <= 0">
     <el-menu-item :index="item.frontpath">
-      <el-icon></el-icon>
+      <el-icon>
+        <svg-icon :icon="item.icon"></svg-icon>
+      </el-icon>
       <span>{{ item.name }}</span>
     </el-menu-item>
   </template>
