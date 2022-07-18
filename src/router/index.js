@@ -8,7 +8,18 @@ const routes = [
   },
   {
     path: '/',
+    name: 'index',
     component: () => import('../layout')
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('../views/error-page/404')
+  },
+  {
+    path: '/401',
+    name: '401',
+    component: () => import('../views/error-page/401')
   }
 ]
 

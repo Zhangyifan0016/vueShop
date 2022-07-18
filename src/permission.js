@@ -2,6 +2,8 @@
 import router from './router'
 // 引入vuex
 import store from './store'
+import { filterRoutes } from './utils/router'
+
 // 设置白名单
 const whiteList = ['/login']
 
@@ -17,12 +19,22 @@ router.beforeEach(async (to, from, next) => {
         // 调取用户信息接口
         const res = await store.dispatch('login/getUserInfo')
         if (res) {
+          const menus = res.data.menus
+          const routes = filterRoutes(menus)
+          if (routes.length > 0) {
+            routes.forEach((item) => {
+              router.addRoute('index', item)
+            })
+            // next({ ...to, replace: true })
+            return next(to.path)
+          }
           next()
         } else {
           next('/login')
         }
+      } else {
+        next()
       }
-      next()
     }
   } else {
     if (whiteList.includes(to.path)) {
