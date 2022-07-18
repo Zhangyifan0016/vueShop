@@ -10,7 +10,7 @@
       </el-icon>
       <!-- 刷新 -->
       <el-tooltip effect="dark" content="刷新" placement="bottom">
-        <el-icon class="reloadIcon hover-effect">
+        <el-icon @click="refresh" class="reloadIcon hover-effect">
           <svg-icon icon="reload"></svg-icon>
         </el-icon>
       </el-tooltip>
@@ -31,7 +31,7 @@
             <el-dropdown-item command="changePassword">
               修改密码
             </el-dropdown-item>
-            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+            <el-dropdown-item command="handleLogout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -40,13 +40,53 @@
 </template>
 <script setup>
 import screenFull from '../../components/screenFull'
+import { ElNotification, ElMessageBox } from 'element-plus'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 const store = useStore()
+const router = useRouter()
 const userInfo = computed(() => {
   return store.getters.userInfo
 })
+// 刷新
+const refresh = () => {
+  location.reload()
+}
+const handleCommand = (command) => {
+  switch (command) {
+    case 'changePassword':
+      changePassword()
+      break
+    case 'handleLogout':
+      handleLogout()
+      break
+  }
+}
+// 修改密码
+const changePassword = () => {
+  alert('修改密码')
+}
+// 退出登录
+const handleLogout = () => {
+  ElMessageBox.confirm('是否要退出登录？', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(async () => {
+      const res = await store.dispatch('login/logout')
+      if (res.msg === 'ok') {
+        router.push('/login')
+        ElNotification({
+          message: res.data,
+          type: 'success'
+        })
+      }
+    })
+    .catch(() => {})
+}
 </script>
 <style scoped lang="scss">
 .header {

@@ -31,6 +31,15 @@ export default {
         commit('setUserInfo', res.data)
       }
       return res
+    },
+    // 退出登录
+    async logout({ commit }) {
+      const res = await loginApi.logout()
+      commit('setToken', '')
+      commit('setUserInfo', '')
+
+      console.log(res)
+      return res
     }
   }
 }
