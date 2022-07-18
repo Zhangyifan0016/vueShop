@@ -14,9 +14,10 @@
           <svg-icon icon="reload"></svg-icon>
         </el-icon>
       </el-tooltip>
-      <!-- 全屏 -->
     </div>
     <div class="right">
+      <!-- 全屏 -->
+      <screenFull class="screen hover-effect"></screenFull>
       <el-avatar class="hover-effect" :size="30" :src="userInfo.avatar" />
       <el-dropdown class="hover-effect" @command="handleCommand">
         <span>
@@ -38,6 +39,7 @@
   </div>
 </template>
 <script setup>
+import screenFull from '../../components/screenFull'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
@@ -88,11 +90,22 @@ const userInfo = computed(() => {
     display: flex;
     align-items: center;
     color: white;
+    .el-avatar {
+      margin-left: 10px;
+      margin-right: 15px;
+    }
     .el-dropdown {
       color: white;
-      margin-left: 10px;
       .el-icon-right {
         vertical-align: middle;
+      }
+    }
+    .screen {
+      height: 60px;
+      line-height: 60px;
+      padding: 0 15px;
+      &:hover {
+        background-color: #4f46e5;
       }
     }
   }
