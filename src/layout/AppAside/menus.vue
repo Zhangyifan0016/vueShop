@@ -1,5 +1,11 @@
 <template>
-  <el-menu :default-active="$route.path" unique-opened router>
+  <el-menu
+    :default-active="$route.path"
+    :collapse="isCollapse"
+    :unique-opened="true"
+    :collapse-transition="false"
+    router
+  >
     <menusTree
       v-for="(item, index) in menusList"
       :item="item"
@@ -15,6 +21,9 @@ const store = useStore()
 const menusList = computed(() => {
   const menusList = store.getters.userInfo.menus
   return menusList
+})
+const isCollapse = computed(() => {
+  return store.getters.isCollapse
 })
 </script>
 <style scoped lang="scss">

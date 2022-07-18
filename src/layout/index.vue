@@ -5,7 +5,7 @@
         <AppHeader></AppHeader>
       </el-header>
       <el-container>
-        <el-aside width="250px">
+        <el-aside :width="isCollapse ? '65px' : '250px'">
           <AppAside></AppAside>
         </el-aside>
         <el-main>
@@ -20,7 +20,12 @@ import AppHeader from './AppHeader'
 import AppAside from './AppAside'
 import AppMain from './AppMain'
 
-import {} from 'vue'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+const store = useStore()
+const isCollapse = computed(() => {
+  return store.getters.isCollapse
+})
 </script>
 <style scoped lang="scss">
 .el-container {

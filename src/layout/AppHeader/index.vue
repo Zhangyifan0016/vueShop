@@ -5,8 +5,9 @@
         <svg-icon className="eleme hover-effect" icon="eleme"></svg-icon>
         <span>商城后台</span>
       </div>
-      <el-icon class="hamburger hover-effect">
-        <svg-icon icon="hamburger-opened"></svg-icon>
+      <el-icon @click="changeMenus" class="hamburger hover-effect">
+        <svg-icon v-if="isCollapse" icon="hamburger-opened"></svg-icon>
+        <svg-icon v-else icon="hamburger-closed"></svg-icon>
       </el-icon>
       <!-- 刷新 -->
       <el-tooltip effect="dark" content="刷新" placement="bottom">
@@ -50,9 +51,15 @@ const router = useRouter()
 const userInfo = computed(() => {
   return store.getters.userInfo
 })
+const isCollapse = computed(() => {
+  return store.getters.isCollapse
+})
 // 刷新
 const refresh = () => {
   location.reload()
+}
+const changeMenus = () => {
+  store.commit('menus/setIsCollapse')
 }
 const handleCommand = (command) => {
   switch (command) {
