@@ -23,7 +23,7 @@ router.beforeEach(async (to, from, next) => {
           const routes = filterRoutes(menus)
           if (routes.length > 0) {
             routes.forEach((item) => {
-              router.addRoute('index', item)
+              router.addRoute('layout', item)
             })
             // next({ ...to, replace: true })
             return next(to.path)

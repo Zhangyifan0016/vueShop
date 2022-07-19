@@ -8,7 +8,7 @@ const routes = [
   },
   {
     path: '/',
-    name: 'index',
+    name: 'layout',
     component: () => import('../layout')
   },
   {
