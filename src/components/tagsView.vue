@@ -56,15 +56,12 @@ onBeforeRouteUpdate((to, from) => {
 })
 
 const removeTab = (path) => {
-  let tagsView = store.getters.tagsView
-  const tabs = tagsView
-  console.log(tabs)
-
+  const tagsView = store.getters.tagsView
   let activeName = activeTab.value
   if (activeName === path) {
-    tabs.forEach((tab, index) => {
+    tagsView.forEach((tab, index) => {
       if (tab.path === path) {
-        const nextTab = tabs[index + 1] || tabs[index - 1]
+        const nextTab = tagsView[index + 1] || tagsView[index - 1]
         if (nextTab) {
           activeName = nextTab.path
         }
@@ -72,8 +69,9 @@ const removeTab = (path) => {
     })
   }
   activeTab.value = activeName
-  tagsView = tagsView.filter((tab) => tab.path !== path)
-  store.commit('tagsview/removeTags', tagsView)
+  const findItemIndex = tagsView.findIndex((tab) => tab.path === path)
+  tagsView.splice(findItemIndex, 1)
+  store.commit('tagsview/removeTags')
 }
 </script>
 

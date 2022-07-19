@@ -3,7 +3,7 @@ import { getItem, setItem } from '../../utils/storage'
 export default {
   namespaced: true,
   state: {
-    tagsView: getItem('tagsView') || []
+    tagsView: getItem('tagsView') || [{ title: '主控台', path: '/' }]
   },
   mutations: {
     setTagsView(state, tagsView) {
@@ -15,8 +15,8 @@ export default {
         setItem('tagsView', state.tagsView)
       }
     },
-    removeTags(state, tagsView) {
-      setItem('tagsView', tagsView)
+    removeTags(state) {
+      setItem('tagsView', state.tagsView)
     }
   }
 }
