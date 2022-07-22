@@ -76,6 +76,14 @@ const removeTab = (path) => {
 </script>
 
 <style lang="scss" scoped>
+.tabs {
+  position: fixed;
+  top: 60px;
+  left: 265px;
+  right: 15px;
+  background-color: #f3f3f3;
+  z-index: 99;
+}
 :deep(.el-tabs__header) {
   border: 0 !important;
 }

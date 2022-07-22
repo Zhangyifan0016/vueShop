@@ -47,7 +47,9 @@ const _showErrorMessage = (msg) => {
   const message = msg || '未知错误'
   ElNotification({
     message: message,
-    type: 'error'
+    type: 'error',
+    offset: 100,
+    dangerouslyUseHTMLString: true
   })
 }
 

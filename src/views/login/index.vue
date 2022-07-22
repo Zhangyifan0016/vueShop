@@ -89,7 +89,8 @@ const login = async () => {
       router.push('/')
       ElNotification({
         message: '登录成功',
-        type: 'success'
+        type: 'success',
+        offset: 100
       })
     }
   } catch (error) {
